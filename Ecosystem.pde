@@ -2,6 +2,7 @@ ArrayList<Blob> blobs = new ArrayList();
 ArrayList<Blue> blues = new ArrayList();
 ArrayList<Red> reds = new ArrayList();
 ArrayList<Food> foods = new ArrayList();
+ArrayList<Virus> viruses = new ArrayList();
 String mode = "";
 
 public void setup() {
@@ -50,7 +51,10 @@ public void draw() {
     for (Food food : foods) {
       blob.blobVsFood(food);
     }
-
+for (Virus virus : viruses) {
+      blob.blobVsVirus(virus);
+    }
+    
     blob.move();
     blob.draw();
   }
@@ -58,6 +62,11 @@ public void draw() {
     if (!food.isActive()) continue;
 
     food.draw();
+  }
+  for (Virus virus : viruses) {
+    if (!virus.isActive()) continue;
+
+    virus.draw();
   }
 
   takeOutTheTrash();
@@ -77,6 +86,8 @@ private void takeOutTheTrash() {
   foods.remove(trashFood);
 }
 
+
+
 //1. Spawn Reds and Blues, not Blobs
 public void mouseReleased() {
   if (mode.equals("blue")) {
@@ -91,7 +102,10 @@ public void mouseReleased() {
   } else if (mode.equals("food")) {
     Food newFood = new Food(mouseX, mouseY);
     foods.add(newFood);
-  }
+  } else if (mode.equals("virus")) {
+    Virus newVirus = new Virus(mouseX, mouseY);
+    viruses.add(newVirus);
+}
 }
 
 public void keyPressed() {
@@ -101,5 +115,7 @@ public void keyPressed() {
     mode = "red";
   } else if (keyCode == 66) {
     mode = "blue";
+  } else if (keyCode == 86) {
+    mode = "virus";
   }
 }
